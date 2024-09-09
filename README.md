@@ -1,6 +1,10 @@
 
 图标：https://remixicon.com/
 
+开发：
+1. 启动服务 cd service && npm run start
+2. 开发 npm run dev
+
 ---
 
 # ChatGPT Web Midjourney Proxy
