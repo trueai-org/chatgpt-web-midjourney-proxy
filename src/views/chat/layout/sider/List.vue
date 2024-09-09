@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { computed ,watch,ref} from 'vue'
+import { computed, watch, ref } from 'vue'
 import { NInput, NPopconfirm, NScrollbar } from 'naive-ui'
 import { SvgIcon } from '@/components/common'
 import { gptConfigStore, gptConfigType, homeStore, useAppStore, useChatStore } from '@/store'
@@ -52,28 +52,28 @@ function isActive(uuid: number) {
   return chatStore.active === uuid
 }
 
-const chatSet= new chatSetting( chatStore.active??1002);
-const myuid= ref<gptConfigType[]>( []) //computed( ()=>chatSet.getObjs() ) ;
+const chatSet = new chatSetting(chatStore.active ?? 1002);
+const myuid = ref<gptConfigType[]>([]) //computed( ()=>chatSet.getObjs() ) ;
 
 //找假死的原因了 修复卡死
-const toMyuid=  debounce(  ()=>{
-    mlog('toMyuid7' );
-   // await sleep(500);
-    myuid.value= chatSet.getObjs(); //用了 这个就会卡死？
-   },600);
+const toMyuid = debounce(() => {
+  mlog('toMyuid7');
+  // await sleep(500);
+  myuid.value = chatSet.getObjs(); //用了 这个就会卡死？
+}, 600);
 
 toMyuid();
-const isInObjs= (uuid:number):undefined|gptConfigType =>{
-  if(!myuid.value.length) return ;
-  const index = myuid.value.findIndex((item:gptConfigType)=>{
-    return item.uuid==uuid
+const isInObjs = (uuid: number): undefined | gptConfigType => {
+  if (!myuid.value.length) return;
+  const index = myuid.value.findIndex((item: gptConfigType) => {
+    return item.uuid == uuid
   })
-  if(index==-1) return ;
-  mlog('index 这个地方有bug',uuid,index, myuid.value[index]  );
-  return myuid.value[index] ;
+  if (index == -1) return;
+  mlog('index 这个地方有bug', uuid, index, myuid.value[index]);
+  return myuid.value[index];
 }
-watch(()=>homeStore.myData.act,(n:string)=>n=='saveChat' && toMyuid() , {deep:true})
-watch(()=>gptConfigStore.myData , toMyuid , {deep:true})
+watch(() => homeStore.myData.act, (n: string) => n == 'saveChat' && toMyuid(), { deep: true })
+watch(() => gptConfigStore.myData, toMyuid, { deep: true })
 
 </script>
 
@@ -88,19 +88,14 @@ watch(()=>gptConfigStore.myData , toMyuid , {deep:true})
       </template>
       <template v-else>
         <div v-for="(item, index) of dataSources" :key="index">
-          <a
-            class="relative flex items-center gap-3 px-3 py-3 break-all border rounded-md cursor-pointer hover:bg-neutral-100 group dark:border-neutral-800 dark:hover:bg-[#24272e]"
-            :class="isActive(item.uuid) && ['border-[#4b9e5f]', 'bg-neutral-100', 'text-[#4b9e5f]', 'dark:bg-[#24272e]', 'dark:border-[#4b9e5f]', 'pr-14']"
-            @click="handleSelect(item)"
-          >
-             
-             <AiListText   :myObj="isInObjs(item.uuid)" :myItem="item">
-               <NInput
-                v-if="item.isEdit"
-                v-model:value="item.title" size="tiny"
-                @keypress="handleEnter(item, false, $event)"
-              />
-             </AiListText>
+          <a class="relative flex items-center gap-1.5 px-3 py-1 break-all rounded-md cursor-pointer hover:bg-neutral-100 group dark:border-neutral-800 dark:hover:bg-[#24272e]"
+            :class="isActive(item.uuid) ? ['border-[#4b9e5f]', 'bg-neutral-100', 'dark:text-gray-200', 'dark:bg-[#24272e]', 'dark:border-[#4b9e5f]', 'pr-14'] : ['text-gray-400']"
+            @click="handleSelect(item)">
+
+            <AiListText :myObj="isInObjs(item.uuid)" :myItem="item">
+              <NInput v-if="item.isEdit" v-model:value="item.title" size="tiny"
+                @keypress="handleEnter(item, false, $event)" />
+            </AiListText>
             <div v-if="isActive(item.uuid)" class="absolute z-10 flex visible right-1">
               <template v-if="item.isEdit">
                 <button class="p-1" @click="handleEdit(item, false, $event)">

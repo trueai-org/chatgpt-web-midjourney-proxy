@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import aiSiderInput from './aiSiderInput.vue'; 
+import aiSiderInput from './aiSiderInput.vue';
 //import { useAppStore, useChatStore } from '@/store';
 
 import { useBasicLayout } from '@/hooks/useBasicLayout'
@@ -9,10 +9,10 @@ import chatIndex from '@/views/chat/index.vue';
 const { isMobile } = useBasicLayout()
 // const appStore = useAppStore()
 // const chatStore = useChatStore()
-const drawSent=( obj:any )=>{
-    mlog('drawSent' , obj )
+const drawSent = (obj: any) => {
+    mlog('drawSent', obj)
 }
-const mjClose=()=>{
+const mjClose = () => {
 }
 
 // function handleAdd() {
@@ -24,15 +24,18 @@ const mjClose=()=>{
 //handleAdd();
 </script>
 <template>
-         <!-- <chatIndex></chatIndex> -->
+    <!-- <chatIndex></chatIndex> -->
 
-<div   class="flex h-full">
-    <div class="h-full z-30">
-    <aiSiderInput  @close="mjClose" @drawSent="drawSent" :button-disabled="false"></aiSiderInput>
+    <div class="flex h-full">
+        
+
+        <main class="flex-1 overflow-hidden h-full">
+            <chatIndex></chatIndex>
+        </main>
+
+        <!-- TODO 这里是绘画框 -->
+        <!-- <div class="h-full z-30">
+            <aiSiderInput @close="mjClose" @drawSent="drawSent" :button-disabled="false"></aiSiderInput>
+        </div> -->
     </div>
-     
-    <main class="flex-1 overflow-hidden h-full">
-        <chatIndex></chatIndex>
-    </main>
-</div>
 </template>

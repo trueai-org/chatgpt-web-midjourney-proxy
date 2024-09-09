@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import type { CSSProperties } from 'vue'
 import { computed, ref, watch } from 'vue'
-import { NButton, NLayoutSider, useDialog } from 'naive-ui'
+import { NButton, NLayoutSider, useDialog, NTooltip } from 'naive-ui'
 import List from './List.vue'
 import Footer from './Footer.vue'
 import { useAppStore, useChatStore } from '@/store'
@@ -76,23 +76,28 @@ watch(
 </script>
 
 <template>
-  <NLayoutSider
-    :collapsed="collapsed"
-    :collapsed-width="0"
-    :width="260"
-    :show-trigger="isMobile ? false : 'arrow-circle'"
-    collapse-mode="transform"
-    
-    bordered
-    :style="getMobileClass"
-    @update-collapsed="handleUpdateCollapsed"
-  >
+  <NLayoutSider :collapsed="collapsed" :collapsed-width="0" :width="260"
+    :show-trigger="isMobile ? false : 'arrow-circle'" collapse-mode="transform" bordered :style="getMobileClass"
+    @update-collapsed="handleUpdateCollapsed" class="aa-sider-c-trigger">
     <div class="flex flex-col h-full" :style="mobileSafeArea">
       <main class="flex flex-col flex-1 min-h-0">
-        <div class="p-4">
-          <NButton dashed block @click="handleAdd">
-            {{ $t('chat.newChatButton') }}
-          </NButton>
+        <div class="p-4 flex flex-row justify-between items-center">
+          <NTooltip>
+            <template #trigger>
+              <div class="p-1 hover:bg-gray-100 rounded cursor-pointer">
+                <SvgIcon @click="handleAdd" class="text-2xl text-gray-400" icon="ri:side-bar-line" />
+              </div>
+            </template>
+            关闭边栏
+          </NTooltip>
+          <NTooltip>
+            <template #trigger>
+              <div class="p-1 hover:bg-gray-100 rounded cursor-pointer">
+                <SvgIcon @click="handleAdd" class="text-2xl text-gray-400" icon="ri:edit-box-line" />
+              </div>
+            </template>
+            新聊天
+          </NTooltip>
         </div>
         <div class="flex-1 min-h-0 pb-4 overflow-hidden">
           <List />
@@ -108,7 +113,7 @@ watch(
           </NButton>
         </div>
       </main>
-      <Footer />
+      <!-- <Footer /> -->
     </div>
   </NLayoutSider>
   <template v-if="isMobile">

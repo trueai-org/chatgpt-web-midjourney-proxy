@@ -1,11 +1,12 @@
 <script setup lang="ts">
-//import {  NLayoutSider } from 'naive-ui'; 
-import aiDrawInput from './aiDrawInput.vue';
+import mjSiderPeopleItem from './mjSiderPeopleItem.vue';
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { NDrawerContent, NDrawer } from "naive-ui";
 import { computed, ref } from "vue";
-//import { SvgIcon } from '@/components/common';
 import { homeStore } from '@/store';
+
+//import {  NLayoutSider } from 'naive-ui'; 
+//import { SvgIcon } from '@/components/common';
 
 //import { homeStore } from '@/store';
 const { isMobile } = useBasicLayout()
@@ -35,13 +36,13 @@ function drawSent(e: any) {
   <div v-if="isMobile">
     <n-drawer v-model:show="st.show" :height="565" placement="bottom">
       <n-drawer-content style="--n-body-padding:0" class="h-full">
-        <aiDrawInput @draw-sent="drawSent" :button-disabled="isLoading" />
+        <mjSiderPeopleItem @draw-sent="drawSent" :button-disabled="isLoading" />
       </n-drawer-content>
     </n-drawer>
   </div>
-  <section class="h-full overflow-auto w-[300px]" @update-collapsed="handleUpdateCollapsed" v-else>
+  <section class="h-full overflow-auto w-[236px]" @update-collapsed="handleUpdateCollapsed" v-else>
     <div class="h-full w-full">
-      <aiDrawInput @draw-sent="drawSent" :button-disabled="isLoading" />
+      <mjSiderPeopleItem @draw-sent="drawSent" :button-disabled="isLoading" />
     </div>
   </section>
 

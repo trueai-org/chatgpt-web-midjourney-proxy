@@ -4,6 +4,7 @@ import { NAvatar } from 'naive-ui'
 import { useUserStore } from '@/store'
 // import defaultAvatar from '@/assets/avatar.jpg'
 import { isString } from '@/utils/is'
+import { HoverButton, SvgIcon } from '@/components/common'
 
 const userStore = useUserStore()
 
@@ -11,21 +12,24 @@ const userInfo = computed(() => userStore.userInfo)
 </script>
 
 <template>
-  <div class="flex items-center overflow-hidden">
-    <div class="w-10 h-10 overflow-hidden rounded-full shrink-0">
+  <div class="flex items-center overflow-hidden content-center">
+    <div class="overflow-hidden rounded-full shrink-0 flex items-center mr-3">
       <template v-if="isString(userInfo.avatar) && userInfo.avatar.length > 0">
-        <NAvatar
-          size="large"
+        <!-- <NAvatar
+          size="small"
           round
           :src="userInfo.avatar"
           fallback-src="/discord256.png"
-        />
+        /> -->
+        <SvgIcon icon="ri:openai-fill" class="text-2xl" />
+       
       </template>
       <template v-else>
-        <NAvatar size="large" round src="/discord256.png" />
+        <SvgIcon icon="ri:openai-fill" class="text-2xl" />
+        <!-- <NAvatar size="small" round src="/discord256.png" /> -->
       </template>
     </div>
-    <div class="flex-1 min-w-0 ml-2">
+    <!-- <div class="flex-1 min-w-0 ml-2">
       <h2 class="overflow-hidden text-md text-ellipsis whitespace-nowrap">
         {{ userInfo.name ?? 'AI绘图' }}
       </h2>
@@ -35,6 +39,6 @@ const userInfo = computed(() => userStore.userInfo)
           v-html="userInfo.description"
         />
       </p>
-    </div>
+    </div> -->
   </div>
 </template>
